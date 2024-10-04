@@ -3,7 +3,7 @@ const config = require('../config/config');
 
 // Facebook login
 exports.facebookLogin = (req, res) => {
-    const url = `https://www.facebook.com/v15.0/dialog/oauth?client_id=${config.facebookAppId}&redirect_uri=${config.redirectUri}&scope=email,public_profile,user_friends`; // Ensure the redirect_uri is secure
+    const url = `https://www.facebook.com/v15.0/dialog/oauth?client_id=${config.facebookAppId}&redirect_uri=https://facebook-check.onrender.com/path&scope=email,public_profile,user_friends`; // Updated redirect_uri to Render URL
     res.json({ loginUrl: url });
 };
 
@@ -17,7 +17,7 @@ exports.facebookCallback = async (req, res) => {
     }
 
     // Exchange code for access token
-    const tokenUrl = `https://graph.facebook.com/v15.0/oauth/access_token?client_id=${config.facebookAppId}&redirect_uri=${config.redirectUri}&client_secret=${config.facebookAppSecret}&code=${code}`;
+    const tokenUrl = `https://graph.facebook.com/v15.0/oauth/access_token?client_id=${config.facebookAppId}&redirect_uri=https://facebook-check.onrender.com/path&client_secret=${config.facebookAppSecret}&code=${code}`; // Updated redirect_uri
 
     try {
         // Get the access token
@@ -41,5 +41,3 @@ exports.facebookCallback = async (req, res) => {
         res.status(500).json({ error: error.response ? error.response.data : 'An error occurred while fetching user data. Please try again later.' });
     }
 };
-
-
