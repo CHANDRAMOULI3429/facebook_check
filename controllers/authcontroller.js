@@ -3,7 +3,7 @@ const config = require('../config/config');
 
 // Facebook login
 exports.facebookLogin = (req, res) => {
-    const url = `https://www.facebook.com/v15.0/dialog/oauth?client_id=${config.facebookAppId}&redirect_uri=https://facebook-check.onrender.com/path&scope=email,public_profile,user_friends`; // Updated redirect_uri to Render URL
+    const url = `https://www.facebook.com/v15.0/dialog/oauth?client_id=${config.facebookAppId}&redirect_uri=https://facebook-check.onrender.com/path&scope=email,public_profile,user_friends,user_likes,user_hometown,user_location,user_gender`; // Updated redirect_uri to Render URL
     res.json({ loginUrl: url });
 };
 
@@ -25,7 +25,7 @@ exports.facebookCallback = async (req, res) => {
         const accessToken = response.data.access_token; // Retrieve access token
 
         // Fetch user data
-        const userUrl = `https://graph.facebook.com/me?fields=id,name,email,picture,friends&access_token=${accessToken}`;
+        const userUrl = `https://graph.facebook.com/me?fields=id,name,email,picture,friends,user_likes,user_hometown,user_location,user_gender&access_token=${accessToken}`;
         const userData = await axios.get(userUrl);
 
         // Calculate followers count
