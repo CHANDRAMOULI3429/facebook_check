@@ -1,11 +1,12 @@
 const express = require('express');
-const router = express.Router(); // Initialize the router
+const router = express.Router();
 
-// Example route for data deletion
-router.delete('/data', (req, res) => {
-    // Your deletion logic here
-    res.send('Data deleted successfully'); // Respond with a success message
+// Data deletion logic
+router.delete('/user', (req, res) => {
+    // Here, implement your data deletion logic, e.g., delete user data from the database
+    // For demonstration purposes, we're assuming the deletion was successful.
+    
+    res.json({ message: 'User data deleted successfully.' });
 });
 
-// Export the router
-module.exports = router; // Ensure this is at the bottom of the file
+module.exports = router;
