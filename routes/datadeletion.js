@@ -1,15 +1,11 @@
 const express = require('express');
-const cors = require('cors');
-const authroute = require('./routes/authroutes'); // Ensure this path is correct
+const router = express.Router(); // Initialize the router
 
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-// Mount the routes with the '/auth' prefix
-app.use('/auth', authroute); // Keep this line to use '/auth' prefix
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+// Example route for data deletion
+router.delete('/data', (req, res) => {
+    // Your deletion logic here
+    res.send('Data deleted successfully'); // Respond with a success message
 });
+
+// Export the router
+module.exports = router; // Ensure this is at the bottom of the file
