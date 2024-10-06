@@ -3,7 +3,7 @@ const config = require('../config/config');
 
 // Facebook login
 exports.facebookLogin = (req, res) => {
-    const url = `https://www.facebook.com/v15.0/dialog/oauth?client_id=${config.facebookAppId}&redirect_uri=https://facebook-check.onrender.com/path&scope=email,public_profile,user_friends,user_likes,user_hometown,user_location,user_gender`; // Updated redirect_uri to Render URL
+    const url = `https://www.facebook.com/v15.0/dialog/oauth?client_id=${config.facebookAppId}&redirect_uri=${config.redirectUri}&scope=email,public_profile,user_friends,user_likes,user_hometown,user_location,user_gender,user_about_me,user_birthday,user_photos,user_posts,user_videos,user_events,user_relationships,user_tagged_places`; // Added additional permissions
     res.json({ loginUrl: url });
 };
 
@@ -17,7 +17,7 @@ exports.facebookCallback = async (req, res) => {
     }
 
     // Exchange code for access token
-    const tokenUrl = `https://graph.facebook.com/v15.0/oauth/access_token?client_id=${config.facebookAppId}&redirect_uri=https://facebook-check.onrender.com/path&client_secret=${config.facebookAppSecret}&code=${code}`; // Updated redirect_uri
+    const tokenUrl = `https://graph.facebook.com/v15.0/oauth/access_token?client_id=${config.facebookAppId}&redirect_uri=${config.redirectUri}&client_secret=${config.facebookAppSecret}&code=${code}`;
 
     try {
         // Get the access token
@@ -25,7 +25,7 @@ exports.facebookCallback = async (req, res) => {
         const accessToken = response.data.access_token; // Retrieve access token
 
         // Fetch user data
-        const userUrl = `https://graph.facebook.com/me?fields=id,name,email,picture,friends,user_likes,user_hometown,user_location,user_gender&access_token=${accessToken}`;
+        const userUrl = `https://graph.facebook.com/me?fields=id,name,email,picture,friends,likes,hometown,location,gender,about,birthday,photos,posts,videos,events,relationships,tagged_places&access_token=${accessToken}`;
         const userData = await axios.get(userUrl);
 
         // Calculate followers count
